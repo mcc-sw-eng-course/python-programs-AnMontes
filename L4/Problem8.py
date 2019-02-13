@@ -87,24 +87,24 @@ class Statistics:
         return self.i_numbers[p - 1]
 
 
-i_numbers = [7, 8, 5.8, 2, 4.3, 4, 6, 3, 1.5, 8, 10]
+# i_numbers = [7, 8, 5.8, 2, 4.3, 4, 6, 3, 1.5, 8, 10]
 
-obj_statistics = Statistics(i_numbers)
+# obj_statistics = Statistics(i_numbers)
 
 
-print("Sorted array: " + str(obj_statistics.i_numbers))
-print("Number of elements: " + str(obj_statistics.len_array))
-print("")
-print("Mean: " + str(obj_statistics.mean()))
-print("SD: " + str(obj_statistics.std_dev()))
-print("Median: " + str(obj_statistics.median()))
-print("")
-print("1-quartil: " + str(obj_statistics.n_quartil(1)))
-print("2-quartil: " + str(obj_statistics.n_quartil(2)))
-print("3-quartil: " + str(obj_statistics.n_quartil(3)))
-print("")
-
-print("98-percentil: " + str(obj_statistics.n_percentil(98)))
+# print("Sorted array: " + str(obj_statistics.i_numbers))
+# print("Number of elements: " + str(obj_statistics.len_array))
+# print("")
+# print("Mean: " + str(obj_statistics.mean()))
+# print("SD: " + str(obj_statistics.std_dev()))
+# print("Median: " + str(obj_statistics.median()))
+# print("")
+# print("1-quartil: " + str(obj_statistics.n_quartil(1)))
+# print("2-quartil: " + str(obj_statistics.n_quartil(2)))
+# print("3-quartil: " + str(obj_statistics.n_quartil(3)))
+# print("")
+#
+# print("98-percentil: " + str(obj_statistics.n_percentil(98)))
 
 
 
