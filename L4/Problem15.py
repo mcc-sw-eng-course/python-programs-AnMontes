@@ -7,7 +7,7 @@ class Directory:
             self.directory = [
                 {"name": str(name), "Address": str(address), "Phone": str(phone), "email": str(email)}
             ]
-            print(self.directory)
+            # print(self.directory)
         else:
             raise ValueError("Enter a valid email address.")
 
@@ -18,7 +18,7 @@ class Directory:
                 self.directory.append(
                     {"name": str(name), "Address": str(address), "Phone": str(phone), "email": str(email)}
                 )
-                print(self.directory)
+                # print(self.directory)
             else:
                 raise ValueError("Enter a valid email address.")
         else:
@@ -44,7 +44,10 @@ class Directory:
             for x in range(len(text)):
                 text1.append(eval(text[x]))
 
+            # print(text1)
+
             self.directory = text1
+            # print(self.directory)
             print("List loaded to the main object variable.")
         else:
             raise TypeError("filename must be of type string.")
@@ -52,6 +55,7 @@ class Directory:
     def search_from_record(self, pos, key):
         if type(key) in [str] and type(pos) in [int]:
             if key in ["name", "Address", "Phone", "email"]:
+                # print(self.directxory)
                 return self.directory[pos][key]
             else:
                 raise ValueError("Key is not in the dictionary.")
@@ -62,5 +66,5 @@ class Directory:
 direct = Directory("Antonio", "Depa", "123245", "anmksd@hotmail.com")
 Directory.add_record(direct, "BAA", "CASA ", "123", "a@")
 Directory.load_record(direct, "test2")
-result = Directory.search_from_record(direct, 0, "name")
-print(result)
+# result = direct.search_from_record(0, "name")
+# print(result)
