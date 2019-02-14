@@ -103,6 +103,42 @@ class TestProblem15(unittest.TestCase):
 
 #             Ending with .rtf
 
+    def test_search_from_record_expected_output(self):
+        direct = Problem15.Directory("Antonio", "Depa", "3316778899", "anmksd@hotmail.com")
+        result1 = direct.search_from_record(0, "name")
+        result2 = direct.search_from_record(0, "Address")
+        result3 = direct.search_from_record(0, "Phone")
+        result4 = direct.search_from_record(0, "email")
+        self.assertEqual(result1, "Antonio")
+        self.assertEqual(result2, "Depa")
+        self.assertEqual(result3, "3316778899")
+        self.assertEqual(result4, "anmksd@hotmail.com")
+
+    def test_search_from_record_invalid_key(self):
+        direct = Problem15.Directory("Antonio", "Depa", "3316778899", "anmksd@hotmail.com")
+        with self.assertRaises(ValueError):
+            result1 = direct.search_from_record(0, "nameeee")
+
+    def test_search_from_record_invalid_key_type(self):
+        direct = Problem15.Directory("Antonio", "Depa", "3316778899", "anmksd@hotmail.com")
+        with self.assertRaises(ValueError):
+            result1 = direct.search_from_record(0, 2)
+
+    def test_save_record_expected_output(self):
+        direct = Problem15.Directory("SaveTest", "Depa", "3316778899", "anmksd@hotmail.com")
+        direct1 = Problem15.Directory("ShouldBeErased", "Erased", "111111111", "No_email@hotmail.com")
+        direct.save_record("test7")
+        direct1.load_record("test7")
+        self.assertEqual(direct1.directory[0]['name'], "SaveTest")
+        self.assertEqual(direct1.directory[0]['Address'], "Depa")
+        self.assertEqual(direct1.directory[0]['Phone'], "3316778899")
+        self.assertEqual(direct1.directory[0]['email'], "anmksd@hotmail.com")
+
+    def test_save_record_invalid_filename_type(self):
+        direct = Problem15.Directory("SaveTest", "Depa", "3316778899", "anmksd@hotmail.com")
+        with self.assertRaises(TypeError):
+            direct.save_record(1)
+
 
 if __name__ == '__main__':
     unittest.main()

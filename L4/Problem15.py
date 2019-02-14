@@ -63,8 +63,8 @@ class Directory:
             raise ValueError("An argument doesnt have a valid type.")
 
 
-direct = Directory("Antonio", "Depa", "123245", "anmksd@hotmail.com")
-Directory.add_record(direct, "BAA", "CASA ", "123", "a@")
-Directory.load_record(direct, "test2")
+# direct = Directory("Antonio", "Depa", "123245", "anmksd@hotmail.com")
+# Directory.add_record(direct, "BAA", "CASA ", "123", "a@")
+# Directory.load_record(direct, "test2")
 # result = direct.search_from_record(0, "name")
 # print(result)
