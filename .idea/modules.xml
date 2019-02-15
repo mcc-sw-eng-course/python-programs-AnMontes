@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Git_Folder_Classroom.iml" filepath="$PROJECT_DIR$/.idea/Git_Folder_Classroom.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/python-programs-AnMontes.iml" filepath="$PROJECT_DIR$/.idea/python-programs-AnMontes.iml" />
+>>>>>>> origin/Problema_9_y_14
     </modules>
   </component>
 </project>

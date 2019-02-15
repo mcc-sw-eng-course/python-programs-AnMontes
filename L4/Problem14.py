@@ -95,6 +95,7 @@ array.remove_item(1)
 array.sort_list()
 array.l_merge([6, 7, 4, 9])
 array.r_merge([1, 1, 1, 1])
+array.save_to_text_file("test1")
 read = array.read_from_text_file("test1")
 
-print(read)
+#print(read)
