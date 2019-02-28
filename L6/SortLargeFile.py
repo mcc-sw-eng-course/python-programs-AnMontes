@@ -38,14 +38,15 @@ class SortLargeCsv:
                         self.error = 1
                         print("The selected delimiter is incorrect.")
         self.input_state = 1
-        print(self.data_array)
+        #print(self.data_array)
 
-    def set_output_data(self, file_path_name):
+    def set_output_data(self, file_path_name, delimit):
         if self.input_state and not self.error:
             if type(file_path_name) is str:
                 self.data_output_path_file_name = file_path_name.replace(".csv", "")
-                # with open(self.data_output_path_file_name + ".csv", mode='w') as csvwriter:
-                #     csvwriter = csv.writer(csvwriter, delimiter=delimit)
+                with open(self.data_output_path_file_name + ".csv", mode='w') as csvwriter:
+                    csvwriter = csv.writer(csvwriter, delimiter=delimit)
+                    csvwriter.writerow(self.data_array)
             else:
                 raise ValueError("Filename must be of type string.")
         else:
@@ -88,13 +89,16 @@ class SortLargeCsv:
 
         left = self.merge_sort(left)
         right = self.merge_sort(right)
-
+        self.data_array = list(self.merge(left, right))
         return list(self.merge(left, right))
 
 
 sort_data = SortLargeCsv()
-sort_data.set_input_data("large_csv.csv", ',')
-sort_data.set_output_data("outputcsv.csv")          # Falta checar con .txt, .docx, etc...
-sorted_list = sort_data.merge_sort(sort_data.data_array)
-print(sorted_list)
+print(sort_data.data_array)
+sort_data.set_input_data("large4_csv.csv", ',')
+print(sort_data.data_array)
+sort_data.merge_sort(sort_data.data_array)
+print(sort_data.data_array)
+sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
+#print(sorted_list)
 
