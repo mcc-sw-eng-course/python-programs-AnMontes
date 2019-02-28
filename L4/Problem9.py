@@ -53,5 +53,5 @@ def roman(decimal):
     return str_roman
 
 
-number = 3999999
+number = 400000
 print(str(number) + " to roman: " + str(roman(number)))

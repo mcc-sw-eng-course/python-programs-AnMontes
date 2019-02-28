@@ -105,7 +105,3 @@ class Statistics:
 # print("")
 #
 # print("98-percentil: " + str(obj_statistics.n_percentil(98)))
-
-
-
-print("Hola")
