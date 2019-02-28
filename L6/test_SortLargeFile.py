@@ -12,22 +12,22 @@ class TestSortLargeFile(unittest.TestCase):
     def test_set_input_data_delimiter(self):
         obj = SortLargeFile.SortLargeCsv()
         with self.assertRaises(ValueError):
-            obj.set_input_data("large_csv.csv",'w')
+            obj.set_input_data("large_csv.csv", 'w')
 
     def test_set_input_data_exist(self):
         obj = SortLargeFile.SortLargeCsv()
         with self.assertRaises(Exception):
-            obj.set_input_data("Hola",',')
+            obj.set_input_data("Hola", ',')
 
     def test_set_input_data_array(self):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
-        self.assertEqual(obj.data_array, [5,4,3,2])
+        self.assertEqual(obj.data_array, [5, 4, 3, 2])
 
     def test_set_output_data_not_input_state(self):
         obj = SortLargeFile.SortLargeCsv()
         with self.assertRaises(Exception):
-            obj.set_output_data("large_csv.csv",',')
+            obj.set_output_data("large_csv.csv", ',')
 
     def test_set_output_data_string(self):
         obj = SortLargeFile.SortLargeCsv()
@@ -35,7 +35,7 @@ class TestSortLargeFile(unittest.TestCase):
         with self.assertRaises(ValueError):
             obj.set_output_data(200, ',')
 
-    def test_set_output_data_string(self):
+    def test_set_output_data_string2(self):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
         obj.set_output_data("outputcsv.csv", ',')
@@ -49,4 +49,8 @@ class TestSortLargeFile(unittest.TestCase):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
         obj.merge_sort(obj.data_array)
-        self.assertEqual(obj.data_array,[2,3,4,5])
+        self.assertEqual(obj.data_array, [2, 3, 4, 5])
+
+
+if __name__ == '__main__':
+    unittest.main()

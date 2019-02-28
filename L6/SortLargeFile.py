@@ -95,7 +95,7 @@ class SortLargeCsv:
 
 sort_data = SortLargeCsv()
 print(sort_data.data_array)
-sort_data.set_input_data("large4_csv.csv", ',')
+sort_data.set_input_data("large_csv.csv", ',')
 print(sort_data.data_array)
 sort_data.merge_sort(sort_data.data_array)
 print(sort_data.data_array)
