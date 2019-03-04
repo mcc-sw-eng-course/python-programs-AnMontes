@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 
 
 class SortLargeCsv:
@@ -10,6 +11,9 @@ class SortLargeCsv:
         self.error = 0
         self.input_state = 0
         self.output_state = 0
+        self.start_time = 0
+        self.finish_time = 0
+        self.elapsed_time = 0
 
     def set_input_data(self, file_path_name, delimit):
         if type(file_path_name) is str:
@@ -44,9 +48,10 @@ class SortLargeCsv:
         if self.input_state and not self.error:
             if type(file_path_name) is str:
                 self.data_output_path_file_name = file_path_name.replace(".csv", "")
-                with open(self.data_output_path_file_name + ".csv", mode='w') as csvwriter:
-                    csvwriter = csv.writer(csvwriter, delimiter=delimit)
-                    csvwriter.writerow(self.data_array)
+                self.delimit = delimit
+                # with open(self.data_output_path_file_name + ".csv", mode='w') as csvwriter:
+                #     csvwriter = csv.writer(csvwriter, delimiter=delimit)
+                #     csvwriter.writerow(self.data_array)
             else:
                 raise ValueError("Filename must be of type string.")
         else:
@@ -56,7 +61,13 @@ class SortLargeCsv:
 
     def execute_merge_sort(self):
         if self.output_state and not self.error:
-            pass
+            self.start_time = datetime.now()
+            result = self.merge_sort(self.data_array)
+            self.finish_time = datetime.now()
+            self.elapsed_time = self.finish_time - self.start_time
+            with open(self.data_output_path_file_name + "_merge.csv", mode='w') as csvwriter:
+                csvwriter = csv.writer(csvwriter, delimiter=self.delimit)
+                csvwriter.writerow(result)
         else:
             raise Exception("set_output_data hasn't been executed.")
 
@@ -92,13 +103,69 @@ class SortLargeCsv:
         self.data_array = list(self.merge(left, right))
         return list(self.merge(left, right))
 
+    def execute_heap_sort(self):
+        if self.output_state and not self.error:
+            self.start_time = datetime.now()
+            result = self.heap_sort(self.data_array)
+            self.finish_time = datetime.now()
+            self.elapsed_time = self.finish_time - self.start_time
+            with open(self.data_output_path_file_name + "_heap.csv", mode='w') as csvwriter:
+                csvwriter = csv.writer(csvwriter, delimiter=self.delimit)
+                csvwriter.writerow(result)
+        else:
+            raise Exception("set_output_data hasn't been executed.")
+
+    def heap_sort(self, array):
+        len_array = len(array)
+
+        for i in range(len_array, -1, -1):  # Iteration from last element to first.
+            self.heap(array, len_array, i)
+
+        for i in range(len_array - 1, 0, -1):
+            array[i], array[0] = array[0], array[i]
+            self.heap(array, i, 0)
+
+        return array
+
+    @staticmethod
+    def heap(array, len_array, i):
+        curr_largest = i
+        left = 2 * curr_largest + 1
+        right = 2 * curr_largest + 2
+
+        # comparison between elements and root.
+        if left < len_array and array[i] < array[left]:
+            curr_largest = left
+
+        if right < len_array and array[curr_largest] < array[right]:
+            curr_largest = right
+
+        # if largest changed, swap the elements.
+        if curr_largest != i:
+            array[i], array[curr_largest] = array[curr_largest], array[i]
+
+            SortLargeCsv.heap(array, len_array, curr_largest)
+
+    def execute_quick_sort(self):
+        pass
+
+    def get_performance_data(self):
+        list_data = [str(len(self.data_array)), str(self.elapsed_time), str(self.start_time), str(self.finish_time)]
+
+        print("Number of elements processed: " + list_data[0])
+        print("Time consumed: " + list_data[1])
+        print("Start time: " + list_data[2])
+        print("Ending time: " + list_data[3])
+
+        return list_data
+
 
 sort_data = SortLargeCsv()
-print(sort_data.data_array)
+# print(sort_data.data_array)
 sort_data.set_input_data("large_csv.csv", ',')
-print(sort_data.data_array)
-sort_data.merge_sort(sort_data.data_array)
-print(sort_data.data_array)
+# print(sort_data.data_array)
 sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
-#print(sorted_list)
+# sort_data.execute_merge_sort()
+sort_data.execute_heap_sort()
+sort_data.get_performance_data()
 
