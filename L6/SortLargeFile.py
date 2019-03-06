@@ -147,7 +147,34 @@ class SortLargeCsv:
             SortLargeCsv.heap(array, len_array, curr_largest)
 
     def execute_quick_sort(self):
-        pass
+        if self.output_state and not self.error:
+            self.start_time = datetime.now()
+            result = self.quick_sort(self.data_array)
+            self.finish_time = datetime.now()
+            self.elapsed_time = self.finish_time - self.start_time
+            self.data_array = result
+            with open(self.data_output_path_file_name + "_quick.csv", mode='w') as csvwriter:
+                csvwriter = csv.writer(csvwriter, delimiter=self.delimit)
+                csvwriter.writerow(result)
+        else:
+            raise Exception("set_output_data hasn't been executed.")
+
+    def quick_sort(self,lista):
+        menor = []
+        igual = []
+        mayor = []
+        if len(lista)>0:
+            pivot = lista[0]
+            for i in lista:
+                if i < pivot:
+                    menor.append(i)
+                if i == pivot:
+                    igual.append(i)
+                if i > pivot:
+                    mayor.append(i)
+            return self.quick_sort(menor) + igual + self.quick_sort(mayor)
+        else:
+            return lista
 
     def get_performance_data(self):
         list_data = [str(len(self.data_array)), str(self.elapsed_time), str(self.start_time), str(self.finish_time)]
@@ -161,11 +188,14 @@ class SortLargeCsv:
 
 
 sort_data = SortLargeCsv()
-# print(sort_data.data_array)
 sort_data.set_input_data("large_csv.csv", ',')
+print(sort_data.data_array)
+sort_data.set_output_data("outputcsv.csv", ',')
+sort_data.execute_quick_sort()
+print(sort_data.data_array)
 # print(sort_data.data_array)
-sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
+#sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
 # sort_data.execute_merge_sort()
-sort_data.execute_heap_sort()
+#sort_data.execute_heap_sort()
 sort_data.get_performance_data()
 
