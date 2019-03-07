@@ -187,15 +187,15 @@ class SortLargeCsv:
         return list_data
 
 
-sort_data = SortLargeCsv()
-sort_data.set_input_data("large_csv.csv", ',')
-print(sort_data.data_array)
-sort_data.set_output_data("outputcsv.csv", ',')
-sort_data.execute_quick_sort()
-print(sort_data.data_array)
+#sort_data = SortLargeCsv()
+#sort_data.set_input_data("large_csv - copia.csv", ',')
+#print(sort_data.data_array)
+#sort_data.set_output_data("outputcsv.csv", ',')
+#sort_data.execute_quick_sort()
+#print(sort_data.data_array)
 # print(sort_data.data_array)
 #sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
 # sort_data.execute_merge_sort()
 #sort_data.execute_heap_sort()
-sort_data.get_performance_data()
+#sort_data.get_performance_data()
 
