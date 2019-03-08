@@ -80,7 +80,8 @@ class TestSortLargeFile(unittest.TestCase):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
         obj.heap_sort(obj.data_array)
-        self.assertIsNot(obj.get_performance_data,None)
+        obj.get_performance_data()
+        self.assertIsNot(obj.get_performance_data(),None)
 
 
 if __name__ == '__main__':
