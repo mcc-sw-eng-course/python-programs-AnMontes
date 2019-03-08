@@ -48,7 +48,8 @@ class TestSortLargeFile(unittest.TestCase):
     def test_merge_sort(self):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
-        obj.merge_sort(obj.data_array)
+        obj.set_output_data("outputcsv.csv", ",")
+        obj.execute_merge_sort()
         self.assertEqual(obj.data_array, [2, 3, 4, 5])
 
     def test_execute_heap_sort(self):
@@ -59,7 +60,8 @@ class TestSortLargeFile(unittest.TestCase):
     def test_heap_sort(self):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
-        obj.heap_sort(obj.data_array)
+        obj.set_output_data("outputcsv_heap.csv", ",")
+        obj.execute_heap_sort()
         self.assertEqual(obj.data_array, [2, 3, 4, 5])
 
     def test_execute_quick_sort(self):
@@ -70,7 +72,8 @@ class TestSortLargeFile(unittest.TestCase):
     def test_quick_sort(self):
         obj = SortLargeFile.SortLargeCsv()
         obj.set_input_data("large_csv - copia.csv", ',')
-        obj.quick_sort(obj.data_array)
+        obj.set_output_data("outputcsv_quick.csv", ",")
+        obj.execute_quick_sort()
         self.assertEqual(obj.quick_sort(obj.data_array), [2, 3, 4, 5])
 
     def test_get_performance_data(self):
