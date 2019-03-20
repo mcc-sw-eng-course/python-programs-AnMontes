@@ -52,9 +52,13 @@ class Board:
 
                 self.board[self.writable_slots[pos]] = "O"
                 self.o_marks.append(self.mark_memory[pos])
-                print(self.o_marks)
+                # print(self.o_marks)
                 self.print_board()
-                self.machine_turn()
+                if self.check_solution_reached(self.o_marks):
+                    print("O won the game!")
+                    self.reset_game()
+                else:
+                    self.machine_turn()
             else:
                 print("Please choose an unoccupied slot.")
         else:
@@ -67,17 +71,54 @@ class Board:
             if self.available_spaces[i] == pos:
                 self.available_spaces.pop(i)
                 break
-        self.x_marks.append(self.mark_memory[pos])
-        print(self.x_marks)
-        self.board[self.writable_slots[pos]] = "X"
-        self.print_board()
 
-    def check_solution_reached(self):
-        pass
+        self.board[self.writable_slots[pos]] = "X"
+        self.x_marks.append(self.mark_memory[pos])
+        # print(self.x_marks)
+        self.print_board()
+        if self.check_solution_reached(self.x_marks):
+            print("X won the game!")
+            self.reset_game()
+
+    @staticmethod
+    def check_solution_reached(mark_memory):
+        if len(mark_memory) >= 3:
+            if (0, 0) in mark_memory and (1, 1) in mark_memory and (2, 2) in mark_memory:
+                return 1
+            elif (0, 2) in mark_memory and (1, 1) in mark_memory and (2, 0) in mark_memory:
+                return 1
+            elif (0, 0) in mark_memory and (1, 0) in mark_memory and (2, 0) in mark_memory:
+                return 1
+            elif (0, 1) in mark_memory and (1, 1) in mark_memory and (2, 1) in mark_memory:
+                return 1
+            elif (0, 2) in mark_memory and (1, 2) in mark_memory and (2, 2) in mark_memory:
+                return 1
+            elif (0, 0) in mark_memory and (0, 1) in mark_memory and (0, 2) in mark_memory:
+                return 1
+            elif (1, 0) in mark_memory and (1, 1) in mark_memory and (1, 2) in mark_memory:
+                return 1
+            elif (2, 0) in mark_memory and (2, 1) in mark_memory and (2, 2) in mark_memory:
+                return 1
+            else:
+                return 0
+        else:
+            return 0
+
+    def reset_game(self):
+        print("Resetting game...")
+        self.board = [" ", "|", " ", "|", " ",
+                      "-", "-", "-", "-", "-",
+                      " ", "|", " ", "|", " ",
+                      "-", "-", "-", "-", "-",
+                      " ", "|", " ", "|", " "]
+        self.available_spaces = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.x_marks = []
+        self.o_marks = []
+        self.print_board()
 
 
 game1 = Board()
 game1.print_board()
 game1.set_mark(1)
-game1.set_mark(2)
-game1.set_mark(3)
+game1.set_mark(5)
+game1.set_mark(9)
