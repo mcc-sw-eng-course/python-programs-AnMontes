@@ -57,6 +57,9 @@ class Board:
                 if self.check_solution_reached(self.o_marks):
                     print("O won the game!")
                     self.reset_game()
+                elif len(self.available_spaces) == 0:
+                    print("Tie!")
+                    self.reset_game()
                 else:
                     self.machine_turn()
             else:
@@ -78,6 +81,9 @@ class Board:
         self.print_board()
         if self.check_solution_reached(self.x_marks):
             print("X won the game!")
+            self.reset_game()
+        elif len(self.available_spaces) == 0:
+            print("Tie!")
             self.reset_game()
 
     @staticmethod
