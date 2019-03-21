@@ -23,7 +23,7 @@ class Board:
 
         self.mark_memory = {1: (0, 0),
                             2: (1, 0),
-                            3: (2, 0),
+                            3: (0, 2),
                             4: (0, 1),
                             5: (1, 1),
                             6: (1, 2),
@@ -59,7 +59,12 @@ class Board:
                     #self.reset_game()
                 elif len(self.available_spaces) == 0:
                     print("Tie!")
-                    #self.reset_game()
+                    decision = input("Desea continuar? Y o N")
+                    if (decision == "N"):
+                        return None
+                    else:
+                        self.reset_game()
+                        self.start_game()
                 else:
                     self.machine_turn()
             else:
@@ -84,7 +89,12 @@ class Board:
             #self.reset_game()
         elif len(self.available_spaces) == 0:
             print("Tie!")
-            #self.reset_game()
+            decision = input("Desea continuar? Y o N")
+            if (decision == "N"):
+                return None
+            else:
+                self.reset_game()
+                self.start_game()
 
     @staticmethod
     def check_solution_reached(mark_memory):
@@ -95,13 +105,13 @@ class Board:
                 return 1
             elif (0, 0) in mark_memory and (1, 0) in mark_memory and (2, 0) in mark_memory:
                 return 1
-            elif (0, 1) in mark_memory and (1, 1) in mark_memory and (2, 1) in mark_memory:
+            elif (0, 1) in mark_memory and (1, 1) in mark_memory and (1, 2) in mark_memory:
                 return 1
             elif (0, 2) in mark_memory and (1, 2) in mark_memory and (2, 2) in mark_memory:
                 return 1
-            elif (0, 0) in mark_memory and (0, 1) in mark_memory and (0, 2) in mark_memory:
+            elif (0, 0) in mark_memory and (0, 1) in mark_memory and (2, 0) in mark_memory:
                 return 1
-            elif (1, 0) in mark_memory and (1, 1) in mark_memory and (1, 2) in mark_memory:
+            elif (1, 0) in mark_memory and (1, 1) in mark_memory and (2, 1) in mark_memory:
                 return 1
             elif (2, 0) in mark_memory and (2, 1) in mark_memory and (2, 2) in mark_memory:
                 return 1
@@ -138,7 +148,3 @@ class Board:
 
 game1 = Board()
 game1.start_game()
-#game1.print_board()
-#game1.set_mark(1)
-#game1.set_mark(5)
-#game1.set_mark(9)

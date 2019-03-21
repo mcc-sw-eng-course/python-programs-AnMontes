@@ -193,9 +193,9 @@ class SortLargeCsv:
 #sort_data.set_output_data("outputcsv.csv", ',')
 #sort_data.execute_quick_sort()
 #print(sort_data.data_array)
-# print(sort_data.data_array)
+#print(sort_data.data_array)
 #sort_data.set_output_data("outputcsv.csv", ',')          # Falta checar con .txt, .docx, etc...
-# sort_data.execute_merge_sort()
+#sort_data.execute_merge_sort()
 #sort_data.execute_heap_sort()
 #sort_data.get_performance_data()
 
