@@ -56,10 +56,10 @@ class Board:
                 self.print_board()
                 if self.check_solution_reached(self.o_marks):
                     print("O won the game!")
-                    self.reset_game()
+                    #self.reset_game()
                 elif len(self.available_spaces) == 0:
                     print("Tie!")
-                    self.reset_game()
+                    #self.reset_game()
                 else:
                     self.machine_turn()
             else:
@@ -81,10 +81,10 @@ class Board:
         self.print_board()
         if self.check_solution_reached(self.x_marks):
             print("X won the game!")
-            self.reset_game()
+            #self.reset_game()
         elif len(self.available_spaces) == 0:
             print("Tie!")
-            self.reset_game()
+            #self.reset_game()
 
     @staticmethod
     def check_solution_reached(mark_memory):
@@ -122,9 +122,23 @@ class Board:
         self.o_marks = []
         self.print_board()
 
+    def start_game(self):
+        self.print_board()
+        while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0:
+            mark = int(input("Introduzca la posición:"))
+            self.set_mark(mark)
+        decision = input("Desea continuar? Y o N")
+        if(decision == "N"):
+            return None
+        else:
+            self.reset_game()
+            self.start_game()
+
+
 
 game1 = Board()
-game1.print_board()
-game1.set_mark(1)
-game1.set_mark(5)
-game1.set_mark(9)
+game1.start_game()
+#game1.print_board()
+#game1.set_mark(1)
+#game1.set_mark(5)
+#game1.set_mark(9)
