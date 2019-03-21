@@ -33,7 +33,10 @@ class Board:
                             }
         self.x_marks = []
         self.o_marks = []
-
+        self.unocuppied = 0
+        self.valid_position = 0
+        self.o_won= 0
+        self.x_won = 0
     def print_board(self):
         for i in range(len(self.board)):
             if i % 5 == 0:
@@ -49,13 +52,15 @@ class Board:
                     if self.available_spaces[i] == pos:
                         self.available_spaces.pop(i)
                         break
-
+                self.unocuppied = 0
+                self.valid_position = 0
                 self.board[self.writable_slots[pos]] = "O"
                 self.o_marks.append(self.mark_memory[pos])
                 # print(self.o_marks)
                 self.print_board()
                 if self.check_solution_reached(self.o_marks):
                     print("O won the game!")
+                    self.o_won = 1
                     #self.reset_game()
                 elif len(self.available_spaces) == 0:
                     print("Tie!")
@@ -68,10 +73,11 @@ class Board:
                 else:
                     self.machine_turn()
             else:
+                self.unocuppied = 1
                 print("Please choose an unoccupied slot.")
         else:
+            self.valid_position = 1
             print("Please choose a valid position, i.e. from 1 to 9.")
-
     # Randomly decide where to place a mark.
     def machine_turn(self):
         pos = random.choice(self.available_spaces)
@@ -86,6 +92,7 @@ class Board:
         self.print_board()
         if self.check_solution_reached(self.x_marks):
             print("X won the game!")
+            self.x_won = 1
             #self.reset_game()
         elif len(self.available_spaces) == 0:
             print("Tie!")
@@ -103,7 +110,7 @@ class Board:
                 return 1
             elif (0, 2) in mark_memory and (1, 1) in mark_memory and (2, 0) in mark_memory:
                 return 1
-            elif (0, 0) in mark_memory and (1, 0) in mark_memory and (2, 0) in mark_memory:
+            elif (0, 0) in mark_memory and (1, 0) in mark_memory and (0, 2) in mark_memory:
                 return 1
             elif (0, 1) in mark_memory and (1, 1) in mark_memory and (1, 2) in mark_memory:
                 return 1
@@ -131,6 +138,8 @@ class Board:
         self.x_marks = []
         self.o_marks = []
         self.print_board()
+        self.o_won = 0
+        self.x_won = 0
 
     def start_game(self):
         self.print_board()
@@ -146,5 +155,5 @@ class Board:
 
 
 
-game1 = Board()
-game1.start_game()
+#game1 = Board()
+#game1.start_game()
