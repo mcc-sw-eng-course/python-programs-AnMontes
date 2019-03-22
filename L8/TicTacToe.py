@@ -179,8 +179,6 @@ class Board:
             self.set_mark(mark)
             if(self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0):
                 self.machine_turn()
-            else:
-                pass
         decision = input("Desea continuar? Y o N")
         if(decision == "N"):
             return None
