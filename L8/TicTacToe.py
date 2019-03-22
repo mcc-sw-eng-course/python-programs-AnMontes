@@ -66,12 +66,6 @@ class Board:
                 elif len(self.available_spaces) == 0:
                     print("Tie!")
                     self.tie= 1
-          #          decision = input("Desea continuar? Y o N")
-          #          if (decision == "N"):
-          #              return None
-          #          else:
-          #              self.reset_game()
-          #              self.start_game()
             else:
                 self.unocuppied = 1
                 print("Please choose an unoccupied slot.")
@@ -97,12 +91,6 @@ class Board:
         elif len(self.available_spaces) == 0:
             print("Tie!")
             self.tie=1
-         #   decision = input("Desea continuar? Y o N")
-         #   if (decision == "N"):
-         #       return None
-         #   else:
-         #       self.reset_game()
-         #       self.start_game()
 
         self.board[self.writable_slots[pos]] = "X"
         self.x_marks.append(self.mark_memory[pos])
@@ -115,12 +103,6 @@ class Board:
         elif len(self.available_spaces) == 0:
             print("Tie!")
             self.tie=1
-        #    decision = input("Desea continuar? Y o N")
-        #    if (decision == "N"):
-        #        return None
-        #    else:
-        #        self.reset_game()
-        #        self.start_game()
 
     def machine_turn_manual(self,pos):
         for i in range(len(self.available_spaces)):
@@ -139,12 +121,6 @@ class Board:
         elif len(self.available_spaces) == 0:
             print("Tie!")
             self.tie=1
-     #       decision = input("Desea continuar? Y o N")
-     #       if (decision == "N"):
-     #           return None
-     #       else:
-     #           self.reset_game()
-     #           self.start_game()
 
         self.board[self.writable_slots[pos]] = "X"
         self.x_marks.append(self.mark_memory[pos])
@@ -157,12 +133,6 @@ class Board:
         elif len(self.available_spaces) == 0:
             print("Tie!")
             self.tie=1
-     #       decision = input("Desea continuar? Y o N")
-     #       if (decision == "N"):
-     #           return None
-     #       else:
-     #           self.reset_game()
-     #           self.start_game()
     @staticmethod
     def check_solution_reached(mark_memory):
         if len(mark_memory) >= 3:
