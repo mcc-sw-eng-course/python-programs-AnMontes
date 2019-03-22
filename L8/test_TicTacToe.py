@@ -58,5 +58,30 @@ class TestTicTacToe(unittest.TestCase):
         obj.machine_turn_manual(5)
         obj.machine_turn_manual(7)
         self.assertEqual(obj.x_won,1)
+        obj.machine_turn_manual(1)
+        obj.machine_turn_manual(5)
+        obj.machine_turn_manual(9)
+        self.assertEqual(obj.x_won,1)
+
+    def test_o_won(self):
+        obj = TicTacToe.Board()
+        obj.set_mark(1)
+        obj.set_mark(2)
+        obj.set_mark(3)
+        self.assertEqual(obj.o_won,1)
+
+    def test_tie(self):
+        obj = TicTacToe.Board()
+        obj.set_mark(1)
+        obj.machine_turn_manual(2)
+        obj.set_mark(3)
+        obj.machine_turn_manual(5)
+        obj.set_mark(4)
+        obj.machine_turn_manual(7)
+        obj.set_mark(6)
+        obj.machine_turn_manual(9)
+        obj.set_mark(8)
+        self.assertEqual(obj.tie,1)
+
 if __name__ == '__main__':
     unittest.main()
