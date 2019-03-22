@@ -72,9 +72,6 @@ class Board:
           #          else:
           #              self.reset_game()
           #              self.start_game()
-                else:
-                    pass
-                    #self.machine_turn()
             else:
                 self.unocuppied = 1
                 print("Please choose an unoccupied slot.")
@@ -223,5 +220,5 @@ class Board:
 
 
 
-#game1 = Board()
-#game1.start_game()
+game1 = Board()
+game1.start_game()
