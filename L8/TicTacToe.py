@@ -170,11 +170,12 @@ class Board:
         self.print_board()
         self.o_won = 0
         self.x_won = 0
-        self.tie=0
+        self.tie = 0
+        self.start_game()
 
     def start_game(self):
         self.print_board()
-        while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0 and self.tie==0:
+        while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) == 0 and self.tie == 0:
             mark = int(input("Introduzca la posición:"))
             self.set_mark(mark)
             if(self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0):
@@ -184,7 +185,8 @@ class Board:
             return None
         else:
             self.reset_game()
-            self.start_game()
+            # self.start_game()
+
 
 
 

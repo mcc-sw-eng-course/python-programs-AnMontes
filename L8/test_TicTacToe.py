@@ -85,6 +85,6 @@ class TestTicTacToe(unittest.TestCase):
 
     def test_game(self):
         obj=TicTacToe.Board()
-        self.assertEqual(obj.start_game(),None)
+        self.assertEqual(obj.start_game(), None)
 if __name__ == '__main__':
     unittest.main()
