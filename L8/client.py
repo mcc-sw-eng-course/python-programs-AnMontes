@@ -27,7 +27,8 @@ while True:
         s.send(str.encode(output_str + str(os.getcwd()) + "> "))
         print(output_str)
 
-        # Czy przeżyłbyś to życie raz jeszcze?
+        # Czy przeżyłbyś to życie
+        #      raz jeszcze?
 
 # Close connection
 
