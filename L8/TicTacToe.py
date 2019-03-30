@@ -1,5 +1,13 @@
 import random
+import socket
+import pickle
 
+
+
+HEADERSIZE = 10
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((socket.gethostname(), 1234))
 
 class Board:
     def __init__(self):
@@ -173,20 +181,61 @@ class Board:
         self.tie=0
 
     def start_game(self):
-        self.print_board()
-        while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0 and self.tie==0:
-            mark = int(input("Introduzca la posición:"))
-            self.set_mark(mark)
-            if(self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0):
-                self.machine_turn()
-        decision = input("Desea continuar? Y o N")
-        if(decision == "N"):
-            return None
-        else:
-            self.reset_game()
-            self.start_game()
+        a = True
+        jugador1=1
+        jugador2=0
+        modo_de_juego = int(input("Choose 1 for PVP or 2 for PVE:"))
+        if(modo_de_juego==2):
+            self.print_board()
+            while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0 and self.tie==0:
+                mark = int(input("Introduzca la posición:"))
+                self.set_mark(mark)
+                if(self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0):
+                    self.machine_turn()
+            decision = input("Desea continuar? Y o N")
+            if(decision == "N"):
+                return None
+            else:
+                self.reset_game()
+                self.start_game()
+        if(modo_de_juego==1):
+            self.print_board()
+            while self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0 and self.tie==0:
+                if(jugador1==1):
+                    mark = int(input("Introduzca la posición:"))
+                    self.set_mark(mark)
+                    jugador1=0
+                    jugador2=1
+                    a = True
+                if(jugador2==1):
+                    if(self.check_solution_reached(self.o_marks) == 0 and self.check_solution_reached(self.x_marks) ==0):
+                        while a == True:
+                            full_msg = b""
+                            new_msg = True
+                            while a == True:
+                                msg = s.recv(16)
+                                if new_msg:
+                                    msglen = int(msg[:HEADERSIZE])
+                                    new_msg = False
 
+                                full_msg += msg
+                                if len(full_msg) - HEADERSIZE == msglen:
+                                    #print(full_msg[HEADERSIZE:])
 
+                                    d = pickle.loads(full_msg[HEADERSIZE:])
+                                    print(d)
 
+                                    new_msg = True
+                                    full_msg = b''
+                                    a = False
+                        self.machine_turn_manual(d)
+                        jugador1=1
+                        jugador2=0
+            decision = input("Desea continuar? Y o N")
+            if (decision == "N"):
+                return None
+            else:
+                self.reset_game()
+                self.start_game()
 game1 = Board()
 game1.start_game()
