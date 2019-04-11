@@ -179,29 +179,526 @@ class Window(QtWidgets.QWidget):
         # Por eso no implemente por completo b1_1.
 
         self.b1_1.clicked.connect(self.btn_selected1_1)
+        self.b1_2.clicked.connect(self.btn_selected1_2)
+        self.b1_3.clicked.connect(self.btn_selected1_3)
+        self.b1_4.clicked.connect(self.btn_selected1_4)
+        self.b2_1.clicked.connect(self.btn_selected2_1)
+        self.b2_2.clicked.connect(self.btn_selected2_2)
+        self.b2_3.clicked.connect(self.btn_selected2_3)
+        self.b2_3.clicked.connect(self.btn_selected2_4)
         self.b3_1.clicked.connect(self.btn_selected3_1)
         self.b3_2.clicked.connect(self.btn_selected3_2)
+        self.b3_3.clicked.connect(self.btn_selected3_3)
+        self.b3_4.clicked.connect(self.btn_selected3_4)
         self.b4_1.clicked.connect(self.btn_selected4_1)
-
+        self.b4_2.clicked.connect(self.btn_selected4_2)
+        self.b4_3.clicked.connect(self.btn_selected4_3)
+        self.b4_4.clicked.connect(self.btn_selected4_4)
+        self.b5_1.clicked.connect(self.btn_selected5_1)
         self.b5_2.clicked.connect(self.btn_selected5_2)
-
+        self.b5_3.clicked.connect(self.btn_selected5_3)
+        self.b5_4.clicked.connect(self.btn_selected5_4)
         self.b6_1.clicked.connect(self.btn_selected6_1)
         self.b6_2.clicked.connect(self.btn_selected6_2)
+        self.b6_3.clicked.connect(self.btn_selected6_3)
+        self.b6_4.clicked.connect(self.btn_selected6_4)
+        self.b7_1.clicked.connect(self.btn_selected7_1)
+        self.b7_2.clicked.connect(self.btn_selected7_2)
+        self.b7_3.clicked.connect(self.btn_selected7_3)
+        self.b7_4.clicked.connect(self.btn_selected7_4)
+        self.b8_1.clicked.connect(self.btn_selected8_1)
+        self.b8_2.clicked.connect(self.btn_selected8_2)
+        self.b8_3.clicked.connect(self.btn_selected8_3)
+        self.b8_3.clicked.connect(self.btn_selected8_3)
+
         self.show()
 
     def btn_selected1_1(self):
-        if self.toggle_selection:
-            self.b1_1.setStyleSheet("")
-            self.b1_1.setText(self.empty_btn)
-            self.curr_selected_btn_coord[0] = 0
-            self.curr_selected_btn_coord[1] = 0
-        else:
-            self.b1_1.setStyleSheet("background-color: rgb(255,0,0)")
-            self.curr_selected_btn_coord[0] = 1
-            self.curr_selected_btn_coord[1] = 1
+        #if self.toggle_selection:
+        #    self.b1_1.setStyleSheet("")
+        #    self.b1_1.setText(self.empty_btn)
+        #    self.curr_selected_btn_coord[0] = 0
+        #    self.curr_selected_btn_coord[1] = 0
+        #else:
+        #    self.b1_1.setStyleSheet("background-color: rgb(255,0,0)")
+        #    self.curr_selected_btn_coord[0] = 1
+        #    self.curr_selected_btn_coord[1] = 1
 
-        self.toggle_selection = not self.toggle_selection
+        #self.toggle_selection = not self.toggle_selection
         # self.b1_1.setStyleSheet("")
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b1_1.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 1:
+                        # Checking for forward movement...
+                        self.b1_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b2_1.text() == self.line_checker:
+                        self.b1_1.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 1:
+                        # Checking for forward movement...
+                        self.b1_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b2_1.text() == self.line_checker:
+                        self.b1_1.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b1_1.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b1_1.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b1_1.text()
+                self.curr_selected_btn_coord[0] = 1
+                self.curr_selected_btn_coord[1] = 1
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected1_2(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b1_2.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b1_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b2_1.text() == self.line_checker:
+                        self.b1_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_1.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b2_2.text() == self.line_checker:
+                        self.b1_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b1_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b2_1.text() == self.line_checker:
+                        self.b1_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_1.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b2_2.text() == self.line_checker:
+                        self.b1_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b1_2.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b1_2.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b1_2.text()
+                self.curr_selected_btn_coord[0] = 1
+                self.curr_selected_btn_coord[1] = 2
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected1_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b1_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b1_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b2_2.text() == self.line_checker:
+                        self.b1_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b1_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b1_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b2_2.text() == self.line_checker:
+                        self.b1_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b1_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b1_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b1_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b1_3.text()
+                self.curr_selected_btn_coord[0] = 1
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected1_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b1_4.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b1_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b1_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b1_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b1_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b1_4.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b1_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b1_4.text()
+                self.curr_selected_btn_coord[0] = 1
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected2_1(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            if self.b2_1.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 1 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b2_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 3 \
+                        and (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for backward movement...
+                        self.b2_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b3_2.text() == self.grep_checker:
+                        self.b2_1.setText(self.store_checker)
+                        self.b3_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            if not self.b2_1.text() == self.empty_btn:      # If the btn initially selected is empty.
+                self.l_prompt_message.setText("Game running normal")
+                self.b2_1.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b2_1.text()
+                self.curr_selected_btn_coord[0] = 2
+                self.curr_selected_btn_coord[1] = 1
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected2_2(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b2_2.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 1 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b2_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 3 \
+                            and (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for backward movement...
+                        self.b2_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b3_2.text() == self.grep_checker:
+                        self.b2_2.setText(self.store_checker)
+                        self.b3_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b3_3.text() == self.grep_checker:
+                        self.b2_2.setText(self.store_checker)
+                        self.b3_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b2_2.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b2_2.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b2_2.text()
+                self.curr_selected_btn_coord[0] = 2
+                self.curr_selected_btn_coord[1] = 2
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected2_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b2_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 1 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b2_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 3 \
+                            and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b2_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b3_3.text() == self.grep_checker:
+                        self.b2_3.setText(self.store_checker)
+                        self.b3_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b3_4.text() == self.grep_checker:
+                        self.b2_3.setText(self.store_checker)
+                        self.b3_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b2_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b2_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b2_3.text()
+                self.curr_selected_btn_coord[0] = 2
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected2_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b2_4.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 1 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for forward movement...
+                        self.b2_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for backward movement...
+                        self.b2_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b3_4.text() == self.grep_checker:
+                        self.b2_4.setText(self.store_checker)
+                        self.b3_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b2_4.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b2_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b2_4.text()
+                self.curr_selected_btn_coord[0] = 2
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
 
     def btn_selected3_1(self):      # Fully implemented.
         if self.toggle_selection:   # Toggle select indica si hay un boton en rojo o no.
@@ -319,20 +816,20 @@ class Window(QtWidgets.QWidget):
                         self.clear_btn_checker()
                         self.reset_btns_state()
                     # Modificaras aqui:
-                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 1 \
-                            and self.b5_1.text() == self.grep_checker:
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b4_1.text() == self.grep_checker:
                         # Modificaras aqui:
-                        self.b5_2.setText(self.store_checker)
+                        self.b3_2.setText(self.store_checker)
                         # Modificaras aqui:
                         self.b4_1.setText(self.empty_btn)
                         self.clear_btn_checker()
                         self.reset_btns_state()
                         self.line_score += 1
                     # Modificaras aqui:
-                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 3 \
-                            and self.b5_2.text() == self.grep_checker:
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b4_2.text() == self.grep_checker:
                         # Modificaras aqui:
-                        self.b5_2.setText(self.store_checker)
+                        self.b3_2.setText(self.store_checker)
                         # Modificaras aqui:
                         self.b4_2.setText(self.empty_btn)
                         self.clear_btn_checker()
@@ -363,6 +860,134 @@ class Window(QtWidgets.QWidget):
                     "Select a button that has a checker")
                 self.reset_btns_state()
 
+    def btn_selected3_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b3_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b3_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 1 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b2_2.text() == self.line_checker:
+                        self.b3_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 1 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b3_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 4 \
+                            and (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for backward movement...
+                        self.b3_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b4_2.text() == self.grep_checker:
+                        self.b3_3.setText(self.store_checker)
+                        self.b4_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b4_3.text() == self.grep_checker:
+                        self.b3_3.setText(self.store_checker)
+                        self.b4_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b3_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b3_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b3_3.text()
+                self.curr_selected_btn_coord[0] = 3
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected3_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            if self.b3_4.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 2 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b3_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 1 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b2_3.text() == self.line_checker:
+                        self.b3_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b2_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 4 \
+                        and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b3_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b4_3.text() == self.grep_checker:
+                        self.b3_4.setText(self.store_checker)
+                        self.b4_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            if not self.b3_4.text() == self.empty_btn:      # If the btn initially selected is empty.
+                self.l_prompt_message.setText("Game running normal")
+                self.b3_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b3_4.text()
+                self.curr_selected_btn_coord[0] = 3
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
     def btn_selected4_1(self):      # Fully implemented.
         if self.toggle_selection:   # If a btn has been previously pressed.
             if self.b4_1.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
@@ -373,8 +998,8 @@ class Window(QtWidgets.QWidget):
                         self.b4_1.setText(self.store_checker)
                         self.clear_btn_checker()
                         self.reset_btns_state()
-                    elif self.curr_selected_btn_coord[0] == 1 and self.curr_selected_btn_coord[1] == 2 \
-                            and self.b2_1.text() == self.line_checker:
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b3_2.text() == self.line_checker:
                         self.b4_1.setText(self.store_checker)
                         # Limpiar el checker que se comio.
                         self.b3_2.setText(self.empty_btn)
@@ -414,6 +1039,272 @@ class Window(QtWidgets.QWidget):
                 self.curr_selected_btn_coord[1] = 1
                 self.toggle_selection = not self.toggle_selection
             else:
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected4_2(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b4_2.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 3 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b4_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b3_2.text() == self.line_checker:
+                        self.b4_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b3_2.text() == self.line_checker:
+                        self.b4_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 5 \
+                            and (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for backward movement...
+                        self.b4_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b5_2.text() == self.grep_checker:
+                        self.b4_2.setText(self.store_checker)
+                        self.b5_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b5_3.text() == self.grep_checker:
+                        self.b4_2.setText(self.store_checker)
+                        self.b5_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b4_2.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b4_2.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b4_2.text()
+                self.curr_selected_btn_coord[0] = 4
+                self.curr_selected_btn_coord[1] = 2
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected4_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b4_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 3 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b4_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b3_3.text() == self.line_checker:
+                        self.b4_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b3_4.text() == self.line_checker:
+                        self.b4_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 5 \
+                            and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b4_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b5_3.text() == self.grep_checker:
+                        self.b4_3.setText(self.store_checker)
+                        self.b5_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b5_4.text() == self.grep_checker:
+                        self.b4_3.setText(self.store_checker)
+                        self.b5_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b4_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b4_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b4_3.text()
+                self.curr_selected_btn_coord[0] = 4
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected4_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            if self.b4_4.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for forward movement...
+                        self.b4_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 2 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b3_4.text() == self.line_checker:
+                        self.b4_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b3_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for backward movement...
+                        self.b4_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b5_4.text() == self.grep_checker:
+                        self.b4_4.setText(self.store_checker)
+                        self.b5_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            if not self.b4_4.text() == self.empty_btn:      # If the btn initially selected is empty.
+                self.l_prompt_message.setText("Game running normal")
+                self.b4_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b4_4.text()
+                self.curr_selected_btn_coord[0] = 4
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected5_1(self):  # Fully implemented.
+        if self.toggle_selection:  # Toggle select indica si hay un boton en rojo o no.
+            # Indica si ya hay una casilla cargada en self.curr_selected_btn_cord.
+
+            # Allow to be move to if this btn is empty.
+            if self.b5_1.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:  # If a grep was selected.
+                    # Movimiento de casilla que es SIN COMER FICHAS:
+                    if self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 1:
+                        self.b5_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # Movimiento que involucra comer fichas.
+                    # Importante notar que esta desfasado dos casillas en rows y en columns
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b4_1.text() == self.line_checker:
+                        self.b5_1.setText(self.store_checker)
+                        self.b4_1.setText(self.empty_btn)  # Limpiar el checker que se comio.
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+
+                    # Si se eligieron casillas muy distantes:
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:  # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 1:
+                        self.b5_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b6_1.text() == self.grep_checker:
+                        self.b5_1.setText(self.store_checker)
+                        self.b6_1.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # Si es la primera seleccion de boton a mover
+            if not self.b5_1.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                # Marcar el boton en rojo.
+                # Da apariencia de que esta seleccionado este boton
+                self.b5_1.setStyleSheet("background-color: rgb(255,0,0)")
+                # Cargar en el array cual boton esta seleccionado actualmente.
+                # SE REALIZA EL MOVIMIENTO HASTA QUE SE SELECCIONA OTRO BOTON DESPUES DE ENTRAR A ESTA RUTINA.
+                self.curr_selected_btn_coord[0] = 5
+                self.curr_selected_btn_coord[1] = 1
+                # Guardar cual es el checker que se movera en un futuro.
+                self.store_checker = self.b5_1.text()
+                # Activar las rutinas de la parte de arriba al seleccionar otro boton.
+                self.toggle_selection = not self.toggle_selection
+            else:
+                # Si se selecciono un boton que no tiene texto (i.e. sin un checker)
                 self.l_prompt_message.setText("Select a button that has a checker")
                 self.reset_btns_state()
 
@@ -489,6 +1380,134 @@ class Window(QtWidgets.QWidget):
             else:
                 self.l_prompt_message.setText(
                     "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected5_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b5_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 4 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b5_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b4_2.text() == self.line_checker:
+                        self.b5_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b4_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b4_3.text() == self.line_checker:
+                        self.b5_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b4_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 6 \
+                            and (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for backward movement...
+                        self.b5_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b6_2.text() == self.grep_checker:
+                        self.b5_3.setText(self.store_checker)
+                        self.b6_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+
+                    elif self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b6_3.text() == self.grep_checker:
+                        self.b5_3.setText(self.store_checker)
+                        self.b6_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b5_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b5_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b5_3.text()
+                self.curr_selected_btn_coord[0] = 5
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected5_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            if self.b5_4.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 4 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b5_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 3 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b4_3.text() == self.line_checker:
+                        self.b5_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b4_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 6 \
+                        and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b5_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b6_3.text() == self.grep_checker:
+                        self.b5_4.setText(self.store_checker)
+                        self.b6_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            if not self.b5_4.text() == self.empty_btn:      # If the btn initially selected is empty.
+                self.l_prompt_message.setText("Game running normal")
+                self.b5_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b5_4.text()
+                self.curr_selected_btn_coord[0] = 5
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText("Select a button that has a checker")
                 self.reset_btns_state()
 
     def btn_selected6_1(self):      # Fully implemented.
@@ -570,7 +1589,7 @@ class Window(QtWidgets.QWidget):
                         self.reset_btns_state()
                         self.grep_score += 1
                     elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 3 \
-                            and self.b5_2.text() == self.line_checker:
+                            and self.b5_3.text() == self.line_checker:
                         self.b6_2.setText(self.store_checker)
                         # Limpiar el checker que se comio.
                         self.b5_3.setText(self.empty_btn)
@@ -625,6 +1644,621 @@ class Window(QtWidgets.QWidget):
                     "Select a button that has a checker")
                 self.reset_btns_state()
 
+    def btn_selected6_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b6_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 5 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b6_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b5_3.text() == self.line_checker:
+                        self.b6_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b5_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b5_4.text() == self.line_checker:
+                        self.b6_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b5_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 \
+                            and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b6_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 8 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b7_3.text() == self.grep_checker:
+                        self.b6_3.setText(self.store_checker)
+                        self.b7_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    elif self.curr_selected_btn_coord[0] == 8 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b7_4.text() == self.grep_checker:
+                        self.b6_3.setText(self.store_checker)
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b6_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b6_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b6_3.text()
+                self.curr_selected_btn_coord[0] = 6
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected6_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            if self.b6_4.text() == self.empty_btn:  # Allow to be move to if this btn is empty.
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for forward movement...
+                        self.b6_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 4 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b5_4.text() == self.line_checker:
+                        self.b6_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b5_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for backward movement...
+                        self.b6_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    elif self.curr_selected_btn_coord[0] == 8 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b7_4.text() == self.grep_checker:
+                        self.b6_4.setText(self.store_checker)
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.line_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            if not self.b6_4.text() == self.empty_btn:      # If the btn initially selected is empty.
+                self.l_prompt_message.setText("Game running normal")
+                self.b6_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b6_4.text()
+                self.curr_selected_btn_coord[0] = 6
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected7_1(self):  # Fully implemented.
+        if self.toggle_selection:  # Toggle select indica si hay un boton en rojo o no.
+            # Indica si ya hay una casilla cargada en self.curr_selected_btn_cord.
+
+            # Allow to be move to if this btn is empty.
+            if self.b7_1.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:  # If a grep was selected.
+                    # Movimiento de casilla que es SIN COMER FICHAS:
+                    if self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 1:
+                        self.b7_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # Movimiento que involucra comer fichas.
+                    # Importante notar que esta desfasado dos casillas en rows y en columns
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b6_1.text() == self.line_checker:
+                        self.b7_1.setText(self.store_checker)
+                        self.b6_1.setText(self.empty_btn)  # Limpiar el checker que se comio.
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+
+                    # Si se eligieron casillas muy distantes:
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:  # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 8 and self.curr_selected_btn_coord[1] == 1:
+                        self.b7_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # Si es la primera seleccion de boton a mover
+            if not self.b7_1.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                # Marcar el boton en rojo.
+                # Da apariencia de que esta seleccionado este boton
+                self.b7_1.setStyleSheet("background-color: rgb(255,0,0)")
+                # Cargar en el array cual boton esta seleccionado actualmente.
+                # SE REALIZA EL MOVIMIENTO HASTA QUE SE SELECCIONA OTRO BOTON DESPUES DE ENTRAR A ESTA RUTINA.
+                self.curr_selected_btn_coord[0] = 7
+                self.curr_selected_btn_coord[1] = 1
+                # Guardar cual es el checker que se movera en un futuro.
+                self.store_checker = self.b7_1.text()
+                # Activar las rutinas de la parte de arriba al seleccionar otro boton.
+                self.toggle_selection = not self.toggle_selection
+            else:
+                # Si se selecciono un boton que no tiene texto (i.e. sin un checker)
+                self.l_prompt_message.setText("Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected7_2(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b7_2.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 6 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b7_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b6_1.text() == self.line_checker:
+                        self.b7_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b6_1.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b6_2.text() == self.line_checker:
+                        self.b7_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b6_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 8 \
+                            and (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for backward movement...
+                        self.b7_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b7_2.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b7_2.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b7_2.text()
+                self.curr_selected_btn_coord[0] = 7
+                self.curr_selected_btn_coord[1] = 2
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected7_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b7_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 6 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b7_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b6_2.text() == self.line_checker:
+                        self.b7_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b6_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b6_3.text() == self.line_checker:
+                        self.b7_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b6_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 8 \
+                            and (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for backward movement...
+                        self.b7_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b7_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b7_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b7_3.text()
+                self.curr_selected_btn_coord[0] = 7
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected7_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b7_4.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 6 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b7_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 5 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b6_3.text() == self.line_checker:
+                        self.b7_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b6_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 8 \
+                            and (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for backward movement...
+                        self.b7_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    # CHECAR SI VA A COMER.
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b7_4.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b7_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b7_4.text()
+                self.curr_selected_btn_coord[0] = 7
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected8_1(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b8_1.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b8_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b7_2.text() == self.line_checker:
+                        self.b8_1.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 1 or self.curr_selected_btn_coord[1] == 2):
+                        # Checking for forward movement...
+                        self.b8_1.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b7_2.text() == self.line_checker:
+                        self.b8_1.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b8_1.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b8_1.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b8_1.text()
+                self.curr_selected_btn_coord[0] = 8
+                self.curr_selected_btn_coord[1] = 1
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected8_2(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b8_2.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b8_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b7_2.text() == self.line_checker:
+                        self.b8_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b7_3.text() == self.line_checker:
+                        self.b8_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 2 or self.curr_selected_btn_coord[1] == 3):
+                        # Checking for forward movement...
+                        self.b8_2.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 1 \
+                            and self.b7_2.text() == self.line_checker:
+                        self.b8_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_2.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b7_3.text() == self.line_checker:
+                        self.b8_2.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText(
+                            "Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b8_2.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b8_2.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b8_2.text()
+                self.curr_selected_btn_coord[0] = 8
+                self.curr_selected_btn_coord[1] = 2
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected8_3(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b8_3.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b8_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b7_3.text() == self.line_checker:
+                        self.b8_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b7_4.text() == self.line_checker:
+                        self.b8_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and \
+                            (self.curr_selected_btn_coord[1] == 3 or self.curr_selected_btn_coord[1] == 4):
+                        # Checking for forward movement...
+                        self.b8_3.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 2 \
+                            and self.b7_3.text() == self.line_checker:
+                        self.b8_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_3.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 4 \
+                            and self.b7_4.text() == self.line_checker:
+                        self.b8_3.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b8_3.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b8_3.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b8_3.text()
+                self.curr_selected_btn_coord[0] = 8
+                self.curr_selected_btn_coord[1] = 3
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
+
+    def btn_selected8_4(self):      # Fully implemented.
+        if self.toggle_selection:   # If a btn has been previously pressed.
+            # Allow to be move to if this btn is empty.
+            if self.b8_4.text() == self.empty_btn:
+                if self.store_checker == self.grep_checker:     # If a grep was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for forward movement...
+                        self.b8_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b7_4.text() == self.line_checker:
+                        self.b8_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+                elif self.store_checker == self.line_checker:   # If a line was selected.
+                    if self.curr_selected_btn_coord[0] == 7 and self.curr_selected_btn_coord[1] == 4:
+                        # Checking for forward movement...
+                        self.b8_4.setText(self.store_checker)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                    elif self.curr_selected_btn_coord[0] == 6 and self.curr_selected_btn_coord[1] == 3 \
+                            and self.b7_4.text() == self.line_checker:
+                        self.b8_4.setText(self.store_checker)
+                        # Limpiar el checker que se comio.
+                        self.b7_4.setText(self.empty_btn)
+                        self.clear_btn_checker()
+                        self.reset_btns_state()
+                        self.grep_score += 1
+                    else:
+                        self.l_prompt_message.setText("Checker progresssion is incorrect.")
+                        self.reset_btns_state()
+            else:
+                self.l_prompt_message.setText("This button isn't empty")
+                self.reset_btns_state()
+        else:
+            # If the btn initially selected is empty.
+            if not self.b8_4.text() == self.empty_btn:
+                self.l_prompt_message.setText("Game running normal")
+                self.b8_4.setStyleSheet("background-color: rgb(255,0,0)")
+                self.store_checker = self.b8_4.text()
+                self.curr_selected_btn_coord[0] = 8
+                self.curr_selected_btn_coord[1] = 4
+                self.toggle_selection = not self.toggle_selection
+            else:
+                self.l_prompt_message.setText(
+                    "Select a button that has a checker")
+                self.reset_btns_state()
 
     def clear_btn_bkgn(self):
         self.b1_1.setStyleSheet("")
