@@ -176,7 +176,7 @@ class Window(QtWidgets.QWidget):
         # De aqui para abajo es donde se tienen que agregar el resto de los botones.
         # Comienza implementando los botones de la mitad para que los puedas ir probando.
         # Si empiezas por la row 1 u 8 no vas a poder probar su movimientos bien.
-        # Por eso no implemente por completo b1_1.
+        # Por eso no implemente por completo b1_1
 
         self.b1_1.clicked.connect(self.btn_selected1_1)
         self.b1_2.clicked.connect(self.btn_selected1_2)
